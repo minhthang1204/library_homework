@@ -5,9 +5,11 @@
  */
 package library_homework;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -31,34 +33,20 @@ public class BookManagrement {
             System.out.println(list.get(i).toString());
             try {
                 //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
-                FileInputStream fis = new FileInputStream("C:\\Users\\Admin\\Documents\\NetBeansProjects\\Library_Homework\\Book.txt");
-                ObjectInputStream ois = new ObjectInputStream(fis);
+                File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\Library_Homework\\Book.txt");
+                FileReader fr = new FileReader(f);
                 //Bước 2: Đọc dữ liệu
-                Book sArr[] = (Book[]) ois.readObject();
-                for (Book b : sArr) {
-                    System.out.println(b.toString());
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
                 }
                 //Bước 3: Đóng luồng
-                fis.close();
-                ois.close();
+                fr.close();
+                br.close();
             } catch (Exception ex) {
-                System.out.println("Loi doc file: " + ex);
+                System.out.println("Lỗi đọc file: " + ex);
             }
-        }
-        try {
-            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
-            FileInputStream fis = new FileInputStream("d:/mydata2.bin");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            //Bước 2: Đọc dữ liệu
-            Book sArr[] = (Book[]) ois.readObject();
-            for (Book b : sArr) {
-                System.out.println(b.toString());
-            }
-            //Bước 3: Đóng luồng
-            fis.close();
-            ois.close();
-        } catch (Exception ex) {
-            System.out.println("Loi doc file: " + ex);
         }
     }
 
@@ -84,14 +72,14 @@ public class BookManagrement {
             list.add(book);
             try {
                 //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
-                File f = new File("d:/mydata3.txt");
+                File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\Library_Homework\\Book.txt");
                 FileWriter fw = new FileWriter(f);
                 //Bước 2: Ghi dữ liệu
-                fw.write("Ghi dữ liệu bằng luồng character");
+                fw.write(list.toString());
                 //Bước 3: Đóng luồng
                 fw.close();
             } catch (IOException ex) {
-                System.out.println("Loi ghi file: " + ex);
+                System.out.println("Lỗi ghi file: " + ex);
             }
         }
     }
