@@ -5,6 +5,12 @@
  */
 package library_homework;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,6 +29,36 @@ public class BookManagrement {
         for (int i = 0; i < list.size(); i++) {
 //          list.get(i).showInfo();
             System.out.println(list.get(i).toString());
+            try {
+                //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+                FileInputStream fis = new FileInputStream("C:\\Users\\Admin\\Documents\\NetBeansProjects\\Library_Homework\\Book.txt");
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                //Bước 2: Đọc dữ liệu
+                Book sArr[] = (Book[]) ois.readObject();
+                for (Book b : sArr) {
+                    System.out.println(b.toString());
+                }
+                //Bước 3: Đóng luồng
+                fis.close();
+                ois.close();
+            } catch (Exception ex) {
+                System.out.println("Loi doc file: " + ex);
+            }
+        }
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            FileInputStream fis = new FileInputStream("d:/mydata2.bin");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            //Bước 2: Đọc dữ liệu
+            Book sArr[] = (Book[]) ois.readObject();
+            for (Book b : sArr) {
+                System.out.println(b.toString());
+            }
+            //Bước 3: Đóng luồng
+            fis.close();
+            ois.close();
+        } catch (Exception ex) {
+            System.out.println("Loi doc file: " + ex);
         }
     }
 
@@ -46,6 +82,17 @@ public class BookManagrement {
             System.out.println("");
             Book book = new Book(price, id, NumberOfPage, name, NXB, type);
             list.add(book);
+            try {
+                //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+                File f = new File("d:/mydata3.txt");
+                FileWriter fw = new FileWriter(f);
+                //Bước 2: Ghi dữ liệu
+                fw.write("Ghi dữ liệu bằng luồng character");
+                //Bước 3: Đóng luồng
+                fw.close();
+            } catch (IOException ex) {
+                System.out.println("Loi ghi file: " + ex);
+            }
         }
     }
 
@@ -91,9 +138,7 @@ public class BookManagrement {
         return false;
     }
 
-
-
-public boolean findId(String Id) {
+    public boolean findId(String Id) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId().equals(Id)) {
                 return true;
